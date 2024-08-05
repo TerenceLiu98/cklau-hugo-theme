@@ -1,9 +1,9 @@
 <style type="text/css">
-.nobull {
-	list-style-type: none;
-	margin-top: auto;
-	margin-bottom: auto;
-}
+	.nobull {
+		list-style-type: none;
+		margin-top: auto;
+		margin-bottom: auto;
+	}
 </style>
 
 {{ if .IsNamedParams }}
@@ -13,12 +13,12 @@
 	<br>
 	<small>
 		<ul class="nobull">
-			<li>{{- i18n "institution" -}}: 
+			<li>Institution: 
 				<a target="_blank" href={{ .Get "INSurl" | safeURL }} title={{ .Get "institution" }}>
 					<span class="info-info">{{ .Get "institution" }}</span>
 				</a>
 			</li>
-			<li>{{- i18n "advisor" -}}: 
+			<li>Advisor: 
 				<a target="_blank" href={{ .Get "PROFurl" | safeURL }} title={{ .Get "advisor" }} >
 					<span class="info-info">{{ .Get "advisor" }}</span>
 				</a>
