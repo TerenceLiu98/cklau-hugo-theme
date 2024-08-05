@@ -1,0 +1,9 @@
+<ruby {{ with .Get 1 }}lang="{{ . }}"{{ end }}>
+    <span>{{- .Inner }}</span>
+    <rp>(</rp><rt {{ with .Get 2 }}lang="{{ . }}"{{ end }}>
+        {{- range (seq 0 (sub (len .Params) 1) ) }}
+            {{- $myArg := $.Get . }}
+            {{ printf `%s` $myArg }}
+        {{- end -}}
+    </rt><rp>)</rp>
+</ruby>{{- "" -}}
