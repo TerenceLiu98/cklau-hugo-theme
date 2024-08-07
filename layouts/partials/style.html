@@ -347,4 +347,46 @@ body {
     }
 }
 
+/* Card styles - for friends */ 
+.card-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centers the cards horizontally */
+    gap: 20px; /* Space between each card */
+    padding: 20px;
+}
+
+.card {
+    width: 80%; /* Adjust based on preference */
+    box-shadow: 0 0px 0px rgba(0,0,0,0.1); /* Soft shadow around each card */
+    display: flex;
+    align-items: center; /* Aligns the image and text content */
+    padding: 10px;
+    background: white; /* Card background */
+    text-decoration: none; /* Removes underline from links */
+    color: inherit; /* Inherits text color from parent */
+}
+
+.card img {
+    width: 80px; /* Fixed size for all images */
+    height: 80px;
+    border-radius: 50%; /* Circular images */
+    margin-right: 20px; /* Space between image and text */
+}
+
+.card .info h2 {
+    margin: 0;
+    font-size: 1.2em; /* Adjust based on preference */
+}
+
+.card .info p {
+    margin: 5px 0 0; /* Space from title to description */
+    font-size: 0.9em;
+    color: #444; /* Lighter text color for the description */
+}
+.card .info span{
+    font-size: 0.5em;
+    color: #666;
+}
+
 </style>
