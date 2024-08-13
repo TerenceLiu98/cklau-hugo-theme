@@ -6,12 +6,9 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500&display=swap" rel="stylesheet">
 <script defer data-domain="nova.moe" src="https://possible.knat.network/js/script.js"></script>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1844674035384472" crossorigin="anonymous"></script>
 <link rel="alternate" type="application/rss+xml" href="{{.Site.BaseURL }}/feed.xml" title="{{ .Site.Title }}">
 
 {{ if .Params.math }}
   {{ partial "math.html" . }}
-{{ end }}
-
-{{ if .Params.ads }}
-  {{ partial "google_ads.html" . }}
 {{ end }}
