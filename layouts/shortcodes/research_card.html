@@ -1,0 +1,20 @@
+<div class="research-card">
+    <h2>{{ .Get "title" }}</h2>
+    <p class="subtitle">{{ .Get "conference" }}</p>
+    <p class="description">{{ .Inner }}</p>
+    <p class="authors">{{ .Get "authors" }}</p>
+    <div class="buttons">
+      {{ if .Get "pdf" }}
+        <a href="{{ .Get "pdf" }}" class="btn btn-primary" target="_blank">PDF</a>
+      {{ end }}
+      {{ if .Get "project" }}
+        <a href="{{ .Get "project" }}" class="btn btn-secondary" target="_blank">Project</a>
+      {{ end }}
+      {{ if .Get "doi" }}
+        <a href="{{ .Get "doi" }}" class="btn btn-tertiary" target="_blank">DOI</a>
+      {{ end }}
+      {{ if .Get "github" }}
+        <a href="{{ .Get "github" }}" class="btn btn-secondary" target="_blank">GitHub</a>
+      {{ end }}
+    </div>
+  </div>
