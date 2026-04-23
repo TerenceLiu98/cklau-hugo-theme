@@ -1,16 +1,17 @@
 {{- $status := .Get "status" | default "publication" -}}
 {{- $num := .Get "num" -}}
+{{- $label := cond (eq $status "working") "Working" "Published" -}}
 <div class="research-card research-card--{{ $status }}">
   <div class="research-card__index">
     {{- with $num }}{{ . }}.{{ else }}{{ add .Ordinal 1 }}.{{ end -}}
   </div>
   <div class="research-card__body">
-    <h3 class="research-card__title">
-      {{ .Get "title" }}
-      {{ if eq $status "working" }}<span class="research-card__badge">Working Paper</span>{{ end }}
-    </h3>
+    <div class="research-card__meta">
+      <span class="research-card__tag research-card__tag--{{ $status }}">{{ $label }}</span>
+      {{ with .Get "conference" }}<span class="research-card__venue"><em>{{ . }}</em>{{ with $.Get "year" }}, {{ . }}{{ end }}</span>{{ end }}
+    </div>
+    <h3 class="research-card__title">{{ .Get "title" }}</h3>
     {{ with .Get "authors" }}<p class="research-card__authors">{{ . | safeHTML }}</p>{{ end }}
-    {{ with .Get "conference" }}<p class="research-card__venue"><em>{{ . }}</em>{{ with $.Get "year" }}, {{ . }}{{ end }}.</p>{{ end }}
     <div class="research-card__links">
       {{ with .Get "pdf" }}<a href="{{ . }}" target="_blank" rel="noopener">PDF</a>{{ end }}
       {{ with .Get "doi" }}<a href="{{ . }}" target="_blank" rel="noopener">DOI</a>{{ end }}
