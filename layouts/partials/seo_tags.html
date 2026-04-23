@@ -1,7 +1,38 @@
+{{- $title := or .Title .Site.Title -}}
+{{- $desc := "" -}}
+{{- with .Description -}}
+  {{- $desc = . -}}
+{{- else -}}
+  {{- if .IsPage -}}
+    {{- $desc = .Summary | plainify | chomp -}}
+    {{- if gt (len $desc) 160 -}}
+      {{- $desc = substr $desc 0 157 | printf "%s…" -}}
+    {{- end -}}
+  {{- else -}}
+    {{- $desc = .Site.Params.description -}}
+  {{- end -}}
+{{- end -}}
+
 <!-- Primary Meta Tags -->
-<meta name="title" content="{{ with .Title }}{{ . }}{{ else }}{{ .Site.Title }}{{ end }}" />
-<meta name="description" content="{{ with .Description }}{{ . }}{{ else }}{{if .IsPage}}{{ .Summary }}{{ else }}{{ with .Site.Params.description }}{{ . }}{{ end }}{{ end }}{{ end }}" />
-<meta name="keywords" content="{{ if .IsPage}}{{ range $index, $tag := .Params.tags }}{{ $tag }},{{ end }}{{ else }}{{ range $plural, $terms := .Site.Taxonomies }}{{ range $term, $val := $terms }}{{ printf "%s," $term }}{{ end }}{{ end }}{{ end }}" />
+<meta name="description" content="{{ $desc }}" />
+{{ with .Site.Params.author }}<meta name="author" content="{{ . }}" />{{ end }}
+{{ if .IsPage }}
+  {{- with .Params.tags -}}
+  <meta name="keywords" content="{{ delimit . ", " }}" />
+  {{- end -}}
+{{ end }}
+
+<!-- Canonical -->
+<link rel="canonical" href="{{ .Permalink }}" />
+
+<!-- Robots -->
+{{ if eq .Kind "404" }}
+<meta name="robots" content="noindex, nofollow" />
+{{ else if .Params.noindex }}
+<meta name="robots" content="noindex, nofollow" />
+{{ else }}
+<meta name="robots" content="index, follow, max-image-preview:large" />
+{{ end }}
 
 <!-- Open Graph / Facebook -->
 {{ template "_internal/opengraph.html" . }}
@@ -9,5 +40,5 @@
 <!-- Twitter -->
 {{ template "_internal/twitter_cards.html" . }}
 
-<!-- Microdata -->
+<!-- Microdata (kept for legacy; JSON-LD is emitted in single.html) -->
 {{ template "_internal/schema.html" . }}

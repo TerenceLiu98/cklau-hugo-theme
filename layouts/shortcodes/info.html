@@ -1,9 +1,13 @@
+{{- $name := .Get "name" -}}
+{{- $url := .Get "url" -}}
+{{- $img := .Get "image" -}}
+{{- $descr := .Get "descr" -}}
 <div class="card-container">
-	<a href={{ .Get "url"| safeURL }} class="card">
-	  <img src={{ .Get "image"| safeURL }}>
+	<a href="{{ $url | safeURL }}" class="card" rel="noopener" target="_blank">
+	  {{ with $img }}<img src="{{ . | safeURL }}" alt="{{ $name }}" loading="lazy" decoding="async" width="120" height="120">{{ end }}
 	  <div class="info">
-		  <h2>{{ .Get "name" }} &nbsp <span>{{ .Get "url" }}</span></h2>
-		  <p>{{ .Get "descr" }}</p>
+		  <h2>{{ $name }} &nbsp; <span>{{ $url }}</span></h2>
+		  <p>{{ $descr }}</p>
 	  </div>
 	</a>
 </div>

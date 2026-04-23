@@ -22,7 +22,7 @@
   </div>
   {{ with .Get "image" }}
   <div class="research-card__image">
-    <img src="{{ . }}" alt="{{ $.Get "title" }}" loading="lazy">
+    <img src="{{ . }}" alt="{{ $.Get "title" }}" loading="lazy" decoding="async" width="120" height="80">
   </div>
   {{ end }}
 </div>

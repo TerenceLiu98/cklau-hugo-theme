@@ -1,20 +1,84 @@
 {{ define "main" }}
-<h1>{{ .Title }}</h1>
-<p>
-  <i>
-    <time datetime='{{ .Date.Format "2006-01-02" }}' pubdate>
-      {{ .Date.Format (default "02 Jan, 2006" .Site.Params.dateFormat) }}
-    </time>
-  </i>
-</p>
+{{- $dateFormat := default "02 Jan, 2006" .Site.Params.dateFormat -}}
+{{- $isoPublished := .Date.Format "2006-01-02T15:04:05Z07:00" -}}
+{{- $isoModified := .Lastmod.Format "2006-01-02T15:04:05Z07:00" -}}
+{{- $desc := "" -}}
+{{- with .Description -}}{{ $desc = . }}{{- else -}}{{ $desc = .Summary | plainify | chomp }}{{- end -}}
+{{- if gt (len $desc) 200 -}}{{ $desc = substr $desc 0 197 | printf "%s…" }}{{- end -}}
 
-<content>
-  {{ .Content }}
-</content>
+{{- $ogImage := "" -}}
+{{- with .Params.cover -}}{{ $ogImage = . | absURL }}
+{{- else -}}{{ with .Params.image -}}{{ $ogImage = . | absURL }}
+{{- else -}}{{ with .Site.Params.images -}}{{ $ogImage = index . 0 | absURL }}
+{{- else -}}{{ with .Site.Params.avatarURL -}}{{ $ogImage = . }}{{- end -}}{{- end -}}{{- end -}}{{- end -}}
 
-<p>
-  {{ range (.GetTerms "tags") }}
-  <a href="{{ .Permalink }}">#{{ .LinkTitle }}</a>
+{{- $tagNames := slice -}}
+{{- range .GetTerms "tags" -}}{{ $tagNames = $tagNames | append .LinkTitle }}{{- end -}}
+
+<article itemscope itemtype="https://schema.org/BlogPosting">
+  <meta itemprop="mainEntityOfPage" content="{{ .Permalink }}" />
+  <h1 itemprop="headline">{{ .Title }}</h1>
+  <p>
+    <i>
+      <time datetime="{{ $isoPublished }}" itemprop="datePublished" pubdate>
+        {{ .Date.Format $dateFormat }}
+      </time>
+      {{ if .Lastmod.After .Date }}
+      · <time datetime="{{ $isoModified }}" itemprop="dateModified">
+        Updated {{ .Lastmod.Format $dateFormat }}
+      </time>
+      {{ else }}
+      <meta itemprop="dateModified" content="{{ $isoModified }}" />
+      {{ end }}
+      {{ with .Site.Params.author }}
+      · <span itemprop="author" itemscope itemtype="https://schema.org/Person">
+          <span itemprop="name">{{ . }}</span>
+        </span>
+      {{ end }}
+    </i>
+  </p>
+
+  <div itemprop="articleBody">
+    {{ .Content }}
+  </div>
+
+  {{ with .GetTerms "tags" }}
+  <p>
+    {{ range . }}
+    <a href="{{ .Permalink }}" rel="tag">#{{ .LinkTitle }}</a>
+    {{ end }}
+  </p>
   {{ end }}
-</p>
+</article>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": {{ .Title | jsonify }},
+  "description": {{ $desc | jsonify }},
+  "datePublished": "{{ $isoPublished }}",
+  "dateModified": "{{ $isoModified }}",
+  "author": {
+    "@type": "Person",
+    "name": {{ .Site.Params.author | default "" | jsonify }}
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": {{ .Site.Title | jsonify }},
+    "logo": {
+      "@type": "ImageObject",
+      "url": {{ (or .Site.Params.favicon "/images/logo.svg") | absURL | jsonify }}
+    }
+  }{{ with $ogImage }},
+  "image": {{ . | jsonify }}{{ end }},
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": {{ .Permalink | jsonify }}
+  },
+  "url": {{ .Permalink | jsonify }}{{ with .WordCount }},
+  "wordCount": {{ . }}{{ end }}{{ with $tagNames }},
+  "keywords": {{ delimit . ", " | jsonify }}{{ end }}
+}
+</script>
 {{ end }}

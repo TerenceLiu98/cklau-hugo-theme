@@ -1,5 +1,5 @@
 {{ define "main" }}
-<content>
+<section class="list-page">
   {{ if .Data.Singular }}
   <h3 style="margin-bottom:0">Filtering for "{{ .Title }}"</h3>
   <small>
@@ -34,5 +34,5 @@
       </div>
     </small>
     {{ end }}
-</content>
+</section>
 {{ end }}
