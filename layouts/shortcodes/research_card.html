@@ -18,11 +18,12 @@
       {{ with .Get "project" }}<a href="{{ . }}" target="_blank" rel="noopener">Project</a>{{ end }}
       {{ with .Get "github" }}<a href="{{ . }}" target="_blank" rel="noopener">Code</a>{{ end }}
       {{ with .Get "access" }}<a href="{{ . }}" target="_blank" rel="noopener">Access</a>{{ end }}
+      {{ with .Get "post" }}<a href="{{ . | relURL }}" class="research-card__links--post">Writeup</a>{{ end }}
     </div>
   </div>
   {{ with .Get "image" }}
   <div class="research-card__image">
-    <img src="{{ . }}" alt="{{ $.Get "title" }}" loading="lazy" decoding="async" width="120" height="80">
+    <img src="{{ . }}" alt="{{ $.Get "title" }}" loading="lazy" decoding="async" width="320" height="200">
   </div>
   {{ end }}
 </div>
