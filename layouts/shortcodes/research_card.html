@@ -1,20 +1,27 @@
-<div class="research-card">
-    <h2>{{ .Get "title" }}</h2>
-    <p class="subtitle">{{ .Get "conference" }}</p>
-    <p class="description">{{ .Inner }}</p>
-    <p class="authors">{{ .Get "authors" }}</p>
-    <div class="buttons">
-      {{ if .Get "pdf" }}
-        <a href="{{ .Get "pdf" }}" class="btn btn-primary" target="_blank">PDF</a>
-      {{ end }}
-      {{ if .Get "project" }}
-        <a href="{{ .Get "project" }}" class="btn btn-secondary" target="_blank">Project</a>
-      {{ end }}
-      {{ if .Get "doi" }}
-        <a href="{{ .Get "doi" }}" class="btn btn-tertiary" target="_blank">DOI</a>
-      {{ end }}
-      {{ if .Get "github" }}
-        <a href="{{ .Get "github" }}" class="btn btn-secondary" target="_blank">GitHub</a>
-      {{ end }}
+{{- $status := .Get "status" | default "publication" -}}
+{{- $num := .Get "num" -}}
+<div class="research-card research-card--{{ $status }}">
+  <div class="research-card__index">
+    {{- with $num }}{{ . }}.{{ else }}{{ add .Ordinal 1 }}.{{ end -}}
+  </div>
+  <div class="research-card__body">
+    <h3 class="research-card__title">
+      {{ .Get "title" }}
+      {{ if eq $status "working" }}<span class="research-card__badge">Working Paper</span>{{ end }}
+    </h3>
+    {{ with .Get "authors" }}<p class="research-card__authors">{{ . | safeHTML }}</p>{{ end }}
+    {{ with .Get "conference" }}<p class="research-card__venue"><em>{{ . }}</em>{{ with $.Get "year" }}, {{ . }}{{ end }}.</p>{{ end }}
+    <div class="research-card__links">
+      {{ with .Get "pdf" }}<a href="{{ . }}" target="_blank" rel="noopener">PDF</a>{{ end }}
+      {{ with .Get "doi" }}<a href="{{ . }}" target="_blank" rel="noopener">DOI</a>{{ end }}
+      {{ with .Get "project" }}<a href="{{ . }}" target="_blank" rel="noopener">Project</a>{{ end }}
+      {{ with .Get "github" }}<a href="{{ . }}" target="_blank" rel="noopener">Code</a>{{ end }}
+      {{ with .Get "access" }}<a href="{{ . }}" target="_blank" rel="noopener">Access</a>{{ end }}
     </div>
   </div>
+  {{ with .Get "image" }}
+  <div class="research-card__image">
+    <img src="{{ . }}" alt="{{ $.Get "title" }}" loading="lazy">
+  </div>
+  {{ end }}
+</div>
