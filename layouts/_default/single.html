@@ -43,11 +43,11 @@
   </div>
 
   {{ with .GetTerms "tags" }}
-  <p>
+  <div class="post-tags">
     {{ range . }}
-    <a href="{{ .Permalink }}" rel="tag">#{{ .LinkTitle }}</a>
+    <a href="{{ .Permalink }}" class="post-tag" rel="tag">{{ .LinkTitle }}</a>
     {{ end }}
-  </p>
+  </div>
   {{ end }}
 </article>
 

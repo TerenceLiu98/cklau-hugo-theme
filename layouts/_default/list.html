@@ -26,13 +26,11 @@
   </ul>
   {{ if .Data.Singular }}
   {{else}}
-    <small>
-      <div>
-        {{ range .Site.Taxonomies.tags }}
-        <a href="{{ .Page.Permalink }}">#{{ .Page.Title }}</a>&nbsp;
-        {{ end }}
-      </div>
-    </small>
+    <div class="post-tags post-tags--cloud">
+      {{ range .Site.Taxonomies.tags }}
+      <a href="{{ .Page.Permalink }}" class="post-tag" rel="tag">{{ .Page.Title }} <span class="post-tag__count">{{ .Count }}</span></a>
+      {{ end }}
+    </div>
     {{ end }}
 </section>
 {{ end }}
