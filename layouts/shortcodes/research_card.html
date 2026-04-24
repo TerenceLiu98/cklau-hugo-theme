@@ -1,10 +1,6 @@
 {{- $status := .Get "status" | default "publication" -}}
-{{- $num := .Get "num" -}}
 {{- $label := cond (eq $status "working") "Working" "Published" -}}
 <div class="research-card research-card--{{ $status }}">
-  <div class="research-card__index">
-    {{- with $num }}{{ . }}.{{ else }}{{ add .Ordinal 1 }}.{{ end -}}
-  </div>
   <div class="research-card__body">
     <div class="research-card__meta">
       <span class="research-card__tag research-card__tag--{{ $status }}">{{ $label }}</span>
