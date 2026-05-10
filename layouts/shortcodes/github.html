@@ -1,5 +1,8 @@
 {{ $repo := .Get "repo" }}
-{{ $detail := getJSON "https://api.github.com/repos/" $repo }}
+{{ $detail := dict }}
+{{ with resources.GetRemote (printf "https://api.github.com/repos/%s" $repo) }}
+{{ $detail = .Content | transform.Unmarshal }}
+{{ end }}
 <article class="shortcode-card">
   <a href="https://github.com/{{ $repo }}" target="_blank" rel="noopener">
     <header>

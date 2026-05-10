@@ -2,3 +2,12 @@
 {{ range .Site.Menus.main }}
 <a href="{{ .URL }}">{{ .Name }}</a>
 {{ end }}
+<button class="theme-toggle" type="button" data-theme-toggle aria-label="Switch theme" title="Switch theme">
+  <svg class="theme-toggle__icon theme-toggle__icon--sun" aria-hidden="true" viewBox="0 0 24 24" fill="none">
+    <circle cx="12" cy="12" r="4" />
+    <path d="M12 2v2M12 20v2M4 12H2M22 12h-2M5 5l1.4 1.4M17.6 17.6 19 19M19 5l-1.4 1.4M6.4 17.6 5 19" />
+  </svg>
+  <svg class="theme-toggle__icon theme-toggle__icon--moon" aria-hidden="true" viewBox="0 0 24 24" fill="none">
+    <path d="M20 14.1A8.5 8.5 0 0 1 9.9 4a7 7 0 1 0 10.1 10.1Z" />
+  </svg>
+</button>
