@@ -1,0 +1,33 @@
+{{- $note := .Get "note" | default "" -}}
+{{- $direction := .Get "direction" | default "n" -}}
+{{- $color := .Get "color" | default "" -}}
+{{- $mark := "true" -}}
+{{- if isset .Params "mark" -}}
+  {{- $mark = lower (printf "%v" (index .Params "mark")) -}}
+{{- end -}}
+
+{{- $directions := slice "n" "ne" "e" "se" "s" "sw" "w" "nw" -}}
+{{- $colors := slice "amber" "blue" "green" "red" "purple" "rainbow" -}}
+
+{{- if not (in $directions $direction) -}}
+  {{- errorf "annotation shortcode: direction must be one of %s, got %q" (delimit $directions ", ") $direction -}}
+{{- end -}}
+{{- if and $color (not (in $colors $color)) -}}
+  {{- errorf "annotation shortcode: color must be one of %s, got %q" (delimit $colors ", ") $color -}}
+{{- end -}}
+{{- if not (in (slice "true" "false") $mark) -}}
+  {{- errorf "annotation shortcode: mark must be true or false, got %q" $mark -}}
+{{- end -}}
+
+{{- $classes := slice "ann" -}}
+{{- if $note -}}
+  {{- $classes = $classes | append (printf "ann-%s" $direction) -}}
+{{- end -}}
+{{- with $color -}}
+  {{- $classes = $classes | append (printf "ann-%s" .) -}}
+{{- end -}}
+{{- if eq $mark "false" -}}
+  {{- $classes = $classes | append "ann-no-mark" -}}
+{{- end -}}
+
+<span class="{{ delimit $classes " " }}"{{ with $note }} data-note="{{ . }}"{{ end }}>{{ .Inner | markdownify }}</span>{{- "" -}}

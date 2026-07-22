@@ -2,7 +2,28 @@
 
 Fork from [Hugo ʕ•ᴥ•ʔ Bear Blog](https://github.com/janraasch/hugo-bearblog)
 
+## Annotation shortcode
+
+Use `annotation` for a short handwritten callout attached to inline content:
+
+```go-html-template
+{{< annotation note="no refresh needed" direction="n" color="amber" >}}real-time updates{{< /annotation >}}
+```
+
+- `note`: label text. Omit it to render a highlight without an arrow or label.
+- `direction`: arrow direction. One of `n`, `ne`, `e`, `se`, `s`, `sw`, `w`, or `nw`; defaults to `n`.
+- `color`: optional color. One of `amber`, `blue`, `green`, `red`, `purple`, or `rainbow`.
+- `mark`: set to `false` to hide the target highlight while retaining the arrow and label.
+
+Annotations are visual enhancements. Do not use `note` as the only source of essential instructions, status, or validation information. On viewports up to 700px wide, labels are placed in the text flow and arrows are hidden to prevent overflow.
+
 # CHANGELOG
+
+## 2026-07-22
+
+### Added
+
+- Added a local, JavaScript-free `annotation` shortcode based on `neat-annotations`, with eight arrow directions, six colors, highlight-only mode, dark-theme support, and a mobile inline fallback.
 
 ## 2026-05-10
 

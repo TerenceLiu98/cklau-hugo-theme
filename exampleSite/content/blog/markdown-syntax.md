@@ -142,3 +142,9 @@ X<sup>n</sup> + Y<sup>n</sup> = Z<sup>n</sup>
 Press <kbd><kbd>CTRL</kbd>+<kbd>ALT</kbd>+<kbd>Delete</kbd></kbd> to end the session.
 
 Most <mark>salamanders</mark> are nocturnal, and hunt for insects, worms, and other small creatures.
+
+## Annotations
+
+The dashboard supports {{< annotation note="no refresh needed" direction="n" color="amber" >}}real-time updates{{< /annotation >}} for every active session.
+
+Omit `note` and `direction` for a simple {{< annotation color="blue" >}}highlight{{< /annotation >}} without an arrow or label.
